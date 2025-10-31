@@ -1,0 +1,54 @@
+<div class="sidebar-container" [class.collapsed]="isCollapsed">
+  <!-- Sidebar Content -->
+  <aside class="sidebar" [class.open]="!isCollapsed || isDesktop">
+    <!-- <div class="sidebar-header">
+      <h3>Menu</h3>
+    </div> -->
+    <nav class="sidebar-nav">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a [routerLink]="['/home']" routerLinkActive="active" class="nav-link" (click)="onNavClick()">
+            <i class="bi bi-house-door"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/products']" routerLinkActive="active" class="nav-link" (click)="onNavClick()">
+            <i class="bi bi-box-seam"></i>
+            <span>Products</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/categories']" routerLinkActive="active" class="nav-link" (click)="onNavClick()">
+            <i class="bi bi-tags"></i>
+            <span>Categories</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/cart']" routerLinkActive="active" class="nav-link" (click)="onNavClick()">
+            <i class="bi bi-cart"></i>
+            <span>Cart</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="showOrders">
+          <a [routerLink]="['/orders']" routerLinkActive="active" class="nav-link" (click)="onNavClick()">
+            <i class="bi bi-bag-check"></i>
+            <span>Orders</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" (click)="onNavClick()">
+            <i class="bi bi-star"></i>
+            <span>Reviews</span>
+          </a>
+        </li>
+        
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Overlay for mobile -->
+  @if (!isCollapsed && !isDesktop) {
+  <div class="sidebar-overlay" (click)="toggleSidebar()"></div>
+  }
+</div>

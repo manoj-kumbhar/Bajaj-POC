@@ -1,0 +1,93 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h4 class="mb-3">Create your account</h4>
+
+          <div *ngIf="serverError" class="alert alert-danger">{{ serverError }}</div>
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+            <div class="mb-3">
+              <label class="form-label">Full name</label>
+              <input type="text" class="form-control" formControlName="name" placeholder="John Doe" />
+              <div class="text-danger small" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+                Name is required (min 2 chars)
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="john@example.com" />
+              <div class="text-danger small" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+                Valid email is required
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" formControlName="password" placeholder="Min 8, 1 upper, 1 lower, 1 digit, 1 special" />
+              <div class="text-danger small" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+                Password must be strong
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Confirm password</label>
+              <input type="password" class="form-control" formControlName="confirmPassword" />
+              <div class="text-danger small" *ngIf="form.errors?.['passwordMismatch'] && (form.get('confirmPassword')?.touched || form.get('password')?.touched)">
+                Passwords do not match
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <select class="form-select" formControlName="role">
+                <option value="customer">Customer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Phone</label>
+              <input type="tel" class="form-control" formControlName="phone" placeholder="99999 99999" />
+            </div>
+
+            <div formGroupName="addressGroup">
+              <div class="mb-3">
+                <label class="form-label">Street</label>
+                <input type="text" class="form-control" formControlName="street" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">City</label>
+                <input type="text" class="form-control" formControlName="city" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">State</label>
+                <input type="text" class="form-control" formControlName="state" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Postal Code</label>
+                <input type="text" class="form-control" formControlName="postalCode" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Country</label>
+                <input type="text" class="form-control" formControlName="country" />
+              </div>
+            </div>
+
+            <button class="btn w-100" [disabled]="form.invalid || submitting" type="submit"
+                    [ngClass]="form.valid ? 'btn-success' : 'btn-danger'">
+              {{ submitting ? 'Creating account...' : 'Sign up' }}
+            </button>
+
+            <div class="text-center mt-3 d-grid gap-2">
+              <button class="btn btn-outline-secondary btn-sm" [routerLink]="['/login']">Already have an account? Sign in</button>
+              <a routerLink="/login" class="link-secondary">Back to Sign in</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

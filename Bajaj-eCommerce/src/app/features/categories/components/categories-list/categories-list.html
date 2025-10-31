@@ -1,0 +1,98 @@
+@if (loading) {
+<div class="text-center py-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+} @else if (categories && categories.length > 0) {
+<div class="container-fluid px-3 px-md-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-4">{{title}}</h1>
+            
+            <!-- Categories Grid -->
+            <div class="row" id="categories-section">
+                @for (category of paginatedCategories; track category._id) {
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 shadow-sm category-card">
+                            <div class="card-img-container">
+                                @if (category.image) {
+                                    <img [src]="category.image" class="card-img-top" [alt]="category.name" style="height: 200px; object-fit: cover;">
+                                } @else {
+                                    <div class="no-image-placeholder d-flex align-items-center justify-content-center" style="height: 200px;">
+                                        <i class="bi bi-tags display-4 text-primary"></i>
+                                    </div>
+                                }
+                            </div>
+                            <div class="card-body d-flex flex-column text-center">
+                                <h5 class="card-title">{{category.name}}</h5>
+                                <p class="card-text text-muted flex-grow-1">
+                                    {{category.slug ? 'Slug: ' + category.slug : 'Explore products in this category'}}
+                                </p>
+                                <div class="mt-auto">
+                                    <button 
+                                        class="btn btn-primary w-100" 
+                                        (click)="navigateToCategory(category._id)">
+                                        <i class="bi bi-eye"></i> View Products
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+            <!-- Pagination -->
+            @if (totalPages > 1) {
+                <nav aria-label="Categories pagination" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" [class.disabled]="currentPage === 1">
+                            <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                                <i class="bi bi-chevron-left"></i> Previous
+                            </button>
+                        </li>
+                        
+                        @for (page of getPageNumbers(); track page) {
+                            <li class="page-item" [class.active]="page === currentPage">
+                                <button class="page-link" (click)="onPageChange(page)">{{page}}</button>
+                            </li>
+                        }
+                        
+                        <li class="page-item" [class.disabled]="currentPage === totalPages">
+                            <button class="page-link" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+                                Next <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            Showing {{(currentPage - 1) * itemsPerPage + 1}} to {{getEndIndex()}} of {{categories.length}} categories ({{itemsPerPage}} per page)
+                        </small>
+                    </div>
+                </nav>
+            }
+            
+            <!-- View All Products Button -->
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button class="btn btn-outline-primary btn-lg" (click)="navigateToProducts()">
+                        <i class="bi bi-grid-3x3-gap"></i> View All Products
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+} @else {
+<div class="text-center py-5">
+    <i class="bi bi-tags display-1 text-muted"></i>
+    <h4 class="mt-3">No categories found</h4>
+    <p class="text-muted">Please try again later or check back soon for new categories.</p>
+    <div class="mt-3">
+        <button class="btn btn-primary" (click)="loadCategories()">
+            <i class="bi bi-arrow-clockwise"></i> Retry
+        </button>
+    </div>
+</div>
+}

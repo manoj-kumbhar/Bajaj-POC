@@ -1,0 +1,9 @@
+.card {
+  border-radius: 12px;
+}
+
+img.rounded {
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+

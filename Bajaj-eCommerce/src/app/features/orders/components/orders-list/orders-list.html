@@ -1,0 +1,33 @@
+<div class="container py-4">
+  <h4>Your Orders</h4>
+  @if (orders.length === 0) {
+    <div class="alert alert-info mt-3">No orders yet. Complete checkout to see them here.</div>
+  } @else {
+    <div class="row g-3 mt-2">
+      @for (o of orders; track o._id) {
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="fw-semibold">Order #{{ o._id }}</div>
+                <div class="text-muted">Status: {{ o.orderStatus || 'Pending' }}</div>
+              </div>
+              <div class="fw-bold">₹ {{ o.totalAmount || 0 }}</div>
+            </div>
+            <hr>
+            <ul class="list-unstyled mb-0">
+              @for (it of o.items; track it.productId) {
+                <li>{{ it.name }} x {{ it.quantity }} — ₹ {{ it.price }} (Total ₹ {{ it.total }})</li>
+              }
+            </ul>
+            <div class="text-muted mt-2">ETA: 3-5 days</div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  }
+</div>
+
+

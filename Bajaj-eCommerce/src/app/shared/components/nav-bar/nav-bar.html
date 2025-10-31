@@ -1,0 +1,117 @@
+<nav class="navbar navbar-expand-lg custom-navbar">
+  <div class="container-fluid">
+    <!-- Sidebar Toggle Button (Mobile Only) -->
+    <button class="navbar-toggler sidebar-toggle-btn" type="button" (click)="toggleSidebar()">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Brand -->
+    <a class="navbar-brand" [routerLink]="['/']" routerLinkActive="active">
+      <i class="bi bi-shop"></i> Bajaj ECommerce
+    </a>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input
+        class="form-control search-input"
+        type="search"
+        placeholder="Search products..."
+        aria-label="Search"
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+      />
+      @if (searchQuery) {
+        <button class="btn search-clear" (click)="clearSearch()">
+          <i class="bi bi-x-circle"></i>
+        </button>
+      }
+      <button class="btn search-btn" type="button" (click)="onSearch()">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+
+    <!-- Collapse Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active">
+            <i class="bi bi-house-door"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/products']" routerLinkActive="active">
+            <i class="bi bi-box-seam"></i> Products
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/categories']" routerLinkActive="active">
+            <i class="bi bi-tags"></i> Categories
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/cart']" routerLinkActive="active">
+            <i class="bi bi-cart"></i> Cart
+          </a>
+        </li>
+
+        @if (showOrders) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/orders']" routerLinkActive="active">
+              <i class="bi bi-bag-check"></i> Orders
+            </a>
+          </li>
+        }
+
+        @if (!isLoggedIn) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">
+              <i class="bi bi-person-circle"></i> Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/register']" routerLinkActive="active">
+              <i class="bi bi-person-plus"></i> Sign Up
+            </a>
+          </li>
+        }
+
+        @if (isLoggedIn) {
+          <li class="nav-item">
+            <span class="nav-link disabled text-muted">
+              {{ greeting }}
+            </span>
+          </li>
+        }
+
+        @if (isAdmin) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/register-product']" routerLinkActive="active">
+              <i class="bi bi-plus-square"></i> Add Product
+            </a>
+          </li>
+        }
+
+        @if (isLoggedIn) {
+          <li class="nav-item">
+            <a class="nav-link" href="#" (click)="logout()">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

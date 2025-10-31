@@ -1,0 +1,9 @@
+.home-container {
+  min-height: calc(100vh - 150px);
+}
+
+.main-content {
+  padding: 20px 0;
+}
+
+

@@ -1,0 +1,31 @@
+<div class="slider-container">
+  <div class="slider-wrapper">
+    <div
+      class="slider-track"
+      [style.width.%]="slides.length * 100"
+      [style.transform]="'translateX(-' + currentIndex * (100 / slides.length) + '%)'"
+    >
+      @for (slide of slides; track $index) {
+        <div class="slide">
+          <h2>{{ slide.title }}</h2>
+          <p>{{ slide.subtitle }}</p>
+        </div>
+      }
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button class="nav-arrow nav-arrow-left" (click)="prevSlide()">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <button class="nav-arrow nav-arrow-right" (click)="nextSlide()">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+
+    <!-- Dots Indicator -->
+    <div class="slider-dots">
+      @for (slide of slides; track $index) {
+        <span class="dot" [class.active]="$index === currentIndex" (click)="goToSlide($index)"></span>
+      }
+    </div>
+  </div>
+</div>

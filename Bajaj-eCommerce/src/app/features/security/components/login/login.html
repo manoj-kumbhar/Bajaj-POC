@@ -1,0 +1,59 @@
+<!-- src/app/features/auth/components/login.html -->
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg border-0 rounded-4 p-4" style="width: 380px">
+    <div class="text-center mb-3">
+      <h4 class="fw-bold text-primary mb-2">Bajaj eCommerce Authentication</h4>
+      <p class="text-muted">Login to your account</p>
+    </div>
+
+    <!-- server error -->
+    <div *ngIf="authErrorMessage !== ''" class="alert alert-danger">{{ authErrorMessage }}</div>
+
+    <form (ngSubmit)="onCredentialSubmit()" [formGroup]="form" novalidate>
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Email address</label>
+        <input type="email" id="email" class="form-control" placeholder="Enter your email" formControlName="email" />
+
+        <!-- client-side validation messages -->
+        <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
+          <div class="alert alert-danger" *ngIf="form.get('email')?.errors?.['required']">
+            Email Id is a required field!
+          </div>
+          <div class="alert alert-danger" *ngIf="form.get('email')?.errors?.['email']">Please enter a valid email.</div>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Enter your password" formControlName="password" />
+
+        <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)">
+          <div class="alert alert-danger" *ngIf="form.get('password')?.errors?.['required']">
+            Password is a required field!
+          </div>
+          <div class="alert alert-danger" *ngIf="form.get('password')?.errors?.['minlength']">Please enter minimum 6 characters</div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="d-grid mt-4">
+        <button
+          [disabled]="form.invalid"
+          type="submit"
+          class="btn btn-lg rounded-pill"
+          [ngClass]="form.valid ? 'btn-success' : 'btn-danger'"
+        >
+          Login
+        </button>
+      </div>
+
+      <div class="text-center mt-3 d-grid gap-2">
+        <button class="btn btn-outline-secondary btn-sm" [routerLink]="['/register']">New here? Create an account</button>
+        <a routerLink="/register" class="link-secondary">Don't have an account? Sign up</a>
+      </div>
+    </form>
+  </div>
+</div>
+

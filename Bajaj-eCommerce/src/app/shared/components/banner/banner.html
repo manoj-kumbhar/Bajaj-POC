@@ -1,0 +1,13 @@
+<div class="banner-container">
+  <div class="container">
+    <h2 class="section-title">Why Shop With Us</h2>
+    <div class="banner-grid">
+      @for (item of bannerItems; track $index) {
+        <div class="banner-card">
+          <h3 class="banner-title">{{ item.title }}</h3>
+          <p class="banner-subtitle">{{ item.subtitle }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

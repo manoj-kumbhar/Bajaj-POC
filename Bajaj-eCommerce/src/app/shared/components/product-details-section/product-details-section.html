@@ -1,0 +1,103 @@
+@if (isVisible) {
+<div class="product-details-section" id="product-details">
+  <div class="container">
+    <div class="details-header">
+      <h2>Product Details</h2>
+      <button class="close-btn" (click)="closeDetails()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    
+    @if (loading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    } @else if (product && product.data) {
+    <div class="row">
+      <div class="col-md-6">
+        <div class="product-image-gallery">
+          <div class="main-image-container">
+            <img [src]="product.data.images[currentImageIndex]" [alt]="product.data.name" class="main-image">
+            @if (product.data.images.length > 1) {
+            <button class="nav-btn prev-btn" (click)="prevImage()">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="nav-btn next-btn" (click)="nextImage()">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+            }
+          </div>
+          @if (product.data.images.length > 1) {
+          <div class="thumbnail-container">
+            @for (img of product.data.images; track $index) {
+            <img [src]="img" [alt]="product.data.name" 
+                 class="thumbnail" 
+                 [class.active]="$index === currentImageIndex"
+                 (click)="currentImageIndex = $index">
+            }
+          </div>
+          }
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="product-details">
+          <h1 class="product-title">{{product.data.name}}</h1>
+          <p class="product-sku">SKU: <span class="fw-bold">{{product.data.sku}}</span></p>
+          <p class="product-category">Category: <span class="fw-bold">{{product.data.categoryId.name}}</span></p>
+          <p class="product-brand">Brand: <span class="fw-bold">{{product.data.brand}}</span></p>
+          
+          <div class="price-section">
+            <span class="current-price">${{getCurrentPrice().toFixed(2)}}</span>
+            @if (product.data.discount > 0) {
+            <span class="original-price">${{product.data.price.toFixed(2)}}</span>
+            <span class="discount-badge">{{product.data.discount}}% OFF</span>
+            }
+          </div>
+          
+          <p class="product-description">{{product.data.description}}</p>
+          
+          <div class="rating-section">
+            <div class="stars">
+              @for (star of [1,2,3,4,5]; track star) {
+              <i class="bi bi-star{{star <= product.data.rating ? '-fill' : ''}}"></i>
+              }
+            </div>
+            <span class="rating-text">{{product.data.rating.toFixed(1)}} ({{product.data.numReviews}} reviews)</span>
+          </div>
+          
+          <div class="product-attributes">
+            <h5>Product Details</h5>
+            <ul class="attributes-list">
+              <li><strong>Color:</strong> {{product.data.attributes.color}}</li>
+              <li><strong>Material:</strong> {{product.data.attributes.material}}</li>
+              <li><strong>Warranty:</strong> {{product.data.attributes.warranty}}</li>
+            </ul>
+          </div>
+          
+          <div class="stock-section">
+            @if (product.data.stock > 0) {
+            <span class="badge bg-success">In Stock ({{product.data.stock}} items)</span>
+            } @else {
+            <span class="badge bg-danger">Out of Stock</span>
+            }
+          </div>
+          
+          <div class="action-buttons">
+            <button class="btn btn-primary btn-lg" (click)="addToCart()">
+              <i class="bi bi-cart-plus"></i> Add to Cart
+            </button>
+            <button class="btn btn-outline-secondary btn-lg">
+              <i class="bi bi-heart"></i> Add to Wishlist
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+}
+

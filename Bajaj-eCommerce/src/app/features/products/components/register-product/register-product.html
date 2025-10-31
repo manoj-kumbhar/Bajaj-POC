@@ -1,0 +1,65 @@
+@if (!isAdmin) {
+  <div class="alert alert-danger mt-5 text-center">
+    <h4>Access Denied</h4>
+    <p>You do not have permission to access this page.</p>
+  </div>
+} @else {
+  <div class="container py-5">
+    <h2 class="mb-4">Register New Product</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Product Name</label>
+          <input class="form-control" formControlName="name" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">SKU</label>
+          <input class="form-control" formControlName="sku" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Brand</label>
+          <input class="form-control" formControlName="brand" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Category ID</label>
+          <input class="form-control" formControlName="categoryId" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Price</label>
+          <input type="number" class="form-control" formControlName="price" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Discount (%)</label>
+          <input type="number" class="form-control" formControlName="discount" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Stock</label>
+          <input type="number" class="form-control" formControlName="stock" />
+        </div>
+        <div class="col-12">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" formControlName="description" rows="3"></textarea>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Color</label>
+          <input class="form-control" formControlName="color" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Material</label>
+          <input class="form-control" formControlName="material" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Warranty</label>
+          <input class="form-control" formControlName="warranty" />
+        </div>
+        <div class="col-12">
+          <label class="form-label">Image URLs (comma-separated)</label>
+          <input class="form-control" formControlName="images" />
+        </div>
+      </div>
+      <div class="mt-4">
+        <button class="btn btn-success" type="submit" [disabled]="form.invalid">Register Product</button>
+      </div>
+    </form>
+  </div>
+}

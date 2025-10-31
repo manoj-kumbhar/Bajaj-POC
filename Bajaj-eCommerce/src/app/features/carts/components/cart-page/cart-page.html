@@ -1,0 +1,50 @@
+<div class="container py-4" *ngIf="items.length; else empty">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card mb-3" *ngFor="let it of items">
+        <div class="card-body d-flex align-items-center gap-3">
+          <img [src]="it.imageUrl || 'assets/placeholder.png'" class="rounded" style="width: 72px; height: 72px; object-fit: cover" />
+          <div class="flex-grow-1">
+            <div class="fw-semibold">{{ it.name }}</div>
+            <div>
+              <span class="text-danger fw-semibold">₹ {{ it.finalPrice | number:'1.0-0' }}</span>
+              <span class="text-muted text-decoration-line-through ms-2" *ngIf="it.discountPercent > 0">
+                ₹ {{ it.originalPrice | number:'1.0-0' }}
+              </span>
+              <span class="badge bg-success ms-2" *ngIf="it.discountPercent > 0">{{ it.discountPercent }}% OFF</span>
+            </div>
+          </div>
+          <div class="btn-group" role="group" aria-label="Quantity">
+            <button class="btn btn-outline-secondary" (click)="dec(it)">-</button>
+            <button class="btn btn-light" disabled>{{ it.quantity }}</button>
+            <button class="btn btn-outline-secondary" (click)="inc(it)">+</button>
+          </div>
+          <button class="btn btn-outline-danger" (click)="remove(it)"><i class="bi bi-trash"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Order Summary</h5>
+          <div class="d-flex justify-content-between"><span>Subtotal</span><span>₹ {{ totals.subtotal | number:'1.0-0' }}</span></div>
+          <hr />
+          <div class="d-flex justify-content-between fw-bold"><span>Total</span><span>₹ {{ totals.total | number:'1.0-0' }}</span></div>
+          <button class="btn btn-primary w-100 mt-3" (click)="checkout()">Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #empty>
+  <div class="container py-5 text-center">
+    <i class="bi bi-cart-x display-4 text-muted"></i>
+    <h5 class="mt-3">Your cart is empty</h5>
+    <a routerLink="/products" class="btn btn-outline-primary mt-3">Browse products</a>
+  </div>
+  
+</ng-template>
+
+
